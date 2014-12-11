@@ -1,17 +1,16 @@
 # Config
 All steps i reproduced to set my [Archlinux] config.
-You can find all the config files and system configuration files for my Archlinux  to set up a development environment.
+You can find all the config files and system configuration files for my Archlinux  to set up a nice environment for development and daily use.
 
 #Config files
 * [Bumblebee config] to avoid errors
 * [lightdm config] with better integration with xfce4
-* [pulseaudio config] config for better audio (?)
-* [conkyrc config] 
+* [pulseaudio config] for better audio (?)
+* [conkyrc config]
 * [guake config] with color shceme from [guake colors elementary-os]
 * [zsh config] files
+* [Sublime Text 3 config]
 * **and others** config's files
-
-
 
 ##Screenshots
 ####Archlinux desktop
@@ -29,7 +28,7 @@ chsh -s /bin/zsh
 sudo chsh -s /bin/zsh
 ```
 
-##xfce4 extras 
+##xfce4 extras
 ```sh
 pacman -S lxtask ffmpegthumbnailer poppler-glib gvfs gvfs-smb sshfs xdg-user-dirs xdg-user-dirs-gtk guake pavucontrol
 yaourt -S xfce4-volumed-pulse xfce4-whiskermenu-plugin menulibre
@@ -37,7 +36,7 @@ xdg-user-dirs-update
 xdg-user-dirs-gtk-update
 ```
 
-##xfce4 eyecandy 
+##xfce4 eyecandy
 ```sh
 yaourt -S xfce-theme-greybird xcursor-human xfce4-volumed-pulse elementary-xfce-icons-git xfce4-whiskermenu-plugin menulibre
 ```
@@ -47,9 +46,9 @@ yaourt -S xfce-theme-greybird xcursor-human xfce4-volumed-pulse elementary-xfce-
 [Icon Theme]
 Inherits=Human
 ```
-##xfce4 Lightdm integration 
+##xfce4 Lightdm integration
 ```sh
-pacman -S lightdm-gtk2-greeter light-locker 
+pacman -S lightdm-gtk2-greeter light-locker
 ```
 `nano /etc/lightdm/lightdm.conf`
 ```sh
@@ -67,7 +66,7 @@ background= /usr/share/pixmaps/wallpaper.png
 theme-name=Greybird
 icon-theme-name=elementary-xfce
 ```
-##xfce4 Lightdm lightlock 
+##xfce4 Lightdm lightlock
 ####1.  Create systemd service
 `nano /etc/systemd/system/lock.service`
 
@@ -139,7 +138,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ##Packages for programming
 ```sh
-pacman -S mariadb mongodb ruby openssh nodejs apache php php-apache php-mcrypt php-gd php-composer gdb virtualbox jdk7-openjdk jre7-openjdk jre7-openjdk-headless 
+pacman -S mariadb mongodb ruby openssh nodejs apache php php-apache php-mcrypt php-gd php-composer gdb virtualbox jdk7-openjdk jre7-openjdk jre7-openjdk-headless
 
 yaourt -S sublime-text-dev virtualbox-ext-oracle
 
@@ -151,13 +150,28 @@ pacman -S tiled tinyxml sdl sdl_image sdl_gfx
 #Networking
 pacman -S nmap wireshark-cli wireshark-gtk john aircrack-ng
 ```
+
+##Sublime Text 3 config
+* Install  [Install Package Control](https://sublime.wbond.net/installation)
+
+Open Sublime Text 3 and hit `ctrl+´` shortcut or the `View > Show Console` menu, then enter the following:
+```bash
+import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+```
+Install and load packages (`ctrl-Shift-P`):
+  * [BracketHighlighter](https://github.com/facelessuser/BracketHighlighter)
+  * [ColorPicker](https://github.com/weslly/ColorPicker)
+  * [SublimeCodeIntel](https://github.com/SublimeCodeIntel/SublimeCodeIntel)
+
+Load user settings from [Sublime Text 3 config]
+
 ####Mariadb config
 `systemctl start mysqld &&  /usr/bin/mysql_secure_installation`
 
 ##Power managment
 ```sh
 pacman -S  tlp lm_sensors smartmontools lsb-release ethtool iw
-systemctl enable tlp 
+systemctl enable tlp
 sensors-detect
 ```
 ##Network Manager
@@ -179,7 +193,7 @@ yaourt -S google-chrome profile-sync-daemon
 pacman -S steam desmume
 
 #Multimedia extras
-pacman -S  gimp gimp-plugin-gmic inkscape blender mkvtoolnix-gtk soundconverter  
+pacman -S  gimp gimp-plugin-gmic inkscape blender mkvtoolnix-gtk soundconverter
 yaourt -S jdownloader2 teamspeak3 animecheck-git radiotray
 #Ofimatic
 pacman -S libreoffice-fresh-es hunspell-es hyphen-es libmythes mythes-es
@@ -221,3 +235,4 @@ pacman -S adobe-source-han-sans-cn-fonts adobe-source-han-sans-jp-fonts adobe-so
 [conkyrc config]:https://github.com/drog/config/blob/master/home/diego/.conkyrc
 [guake config]:https://github.com/drog/config/tree/master/home/diego/.config/gconf/apps/guake
 [zsh config]:https://github.com/drog/config/tree/master/home/diego/.zsh
+[Sublime Text 3 config]:https://github.com/drog/config/tree/master/home/diego/.config/sublime-text-3/Packages/User/Preferences.sublime-settings

@@ -3,11 +3,12 @@ All steps i reproduced to set my [Archlinux] config.
 You can find all the config files and system configuration files for my Archlinux  to set up a development environment.
 
 #Config files
-* **Bumblebee** config
-* **lightdm** config with integration with xfce4
-* **pulseaudio** config for beteer audio
-* **.conky.rc** config
-* **guake** color shceme from [guake colors elementary-os]
+* [Bumblebee config] to avoid errors
+* [lightdm config] with better integration with xfce4
+* [pulseaudio config] config for better audio (?)
+* [conkyrc config] 
+* [guake config] with color shceme from [guake colors elementary-os]
+* [zsh config] files
 * **and others** config's files
 
 
@@ -30,7 +31,7 @@ sudo chsh -s /bin/zsh
 
 ##xfce4 extras 
 ```sh
-pacman -S lxtask ffmpegthumbnailer poppler-glib gvfs gvfs-smb sshfs xdg-user-dirs xdg-user-dirs-gtk guake
+pacman -S lxtask ffmpegthumbnailer poppler-glib gvfs gvfs-smb sshfs xdg-user-dirs xdg-user-dirs-gtk guake pavucontrol
 yaourt -S xfce4-volumed-pulse xfce4-whiskermenu-plugin menulibre
 xdg-user-dirs-update
 xdg-user-dirs-gtk-update
@@ -111,7 +112,21 @@ pacman -S bumblebee bbswitch primus lib32-primus lib32-virtualgl nvidia lib32-nv
 gpasswd -a diego bumblebee
 systemctl enable bumblebeed
 ```
-[bumblebee config]
+`nano /etc/mkinitcpio.conf `
+```sh
+MODULES="i915 bbswitch"
+```
+`nano /etc/default/grub`
+```sh
+GRUB_CMDLINE_LINUX_DEFAULT="quiet rcutree.rcu_idle_gp_delay=1"
+```
+`lspci | grep VGA | grep NVIDIA`
+`nano /etc/bumblebee/xorg.conf.nvidia`
+```sh
+BusID "PCI:01:00:0"
+```
+
+[Source Bumblebee config]
 
 ##[linux-ck] Brain Fuck Scheduler (BFS)
 ```sh
@@ -124,7 +139,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ##Packages for programming
 ```sh
-pacman -S mariadb mongodb ruby openssh nodejs apache php php-apache php-mcrypt php-gd php-composer gdb virtualbox
+pacman -S mariadb mongodb ruby openssh nodejs apache php php-apache php-mcrypt php-gd php-composer gdb virtualbox jdk7-openjdk jre7-openjdk jre7-openjdk-headless 
 
 yaourt -S sublime-text-dev virtualbox-ext-oracle
 
@@ -145,10 +160,20 @@ pacman -S  tlp lm_sensors smartmontools lsb-release ethtool iw
 systemctl enable tlp 
 sensors-detect
 ```
+##Network Manager
+```sh
+pacman -S networkmanager networkmanager-openconnect network-manager-applet dnsmasq
+systemctl enable NetworkManager
+```
 
+##Bluetooth
+```sh
+yaourt -S blueman-git
+systemctl enable bluetooth
+```
 ##Other stuff
 ```sh
-pacman -S conky clementine gpicview wine winetricks wine_gecko xdelta3 pkgstats firefox-adblock-plus  firefox-i18n-es-cl transmission-gtk filezilla xchat  wget mpv libva libva-intel-driver thunderbird-i18n-es-ar  gtk-recordmydesktop skype galculator bleachbit preload ntfs-3g
+pacman -S conky clementine gpicview wine winetricks wine_gecko xdelta3 pkgstats firefox-adblock-plus  firefox-i18n-es-cl transmission-gtk filezilla xchat  wget mpv libva libva-intel-driver thunderbird-i18n-es-ar  gtk-recordmydesktop skype galculator bleachbit preload ntfs-3g archey3
 yaourt -S google-chrome profile-sync-daemon
 #gaming
 pacman -S steam desmume
@@ -185,8 +210,14 @@ pacman -S adobe-source-han-sans-cn-fonts adobe-source-han-sans-jp-fonts adobe-so
 
 [Source Xlock config]:https://bbs.archlinux.org/viewtopic.php?id=180985
 [linux-ck]:https://wiki.archlinux.org/index.php/linux-ck
-[bumblebee config]:https://bbs.archlinux.org/viewtopic.php?pid=1326090#p1326090
+[Source Bumblebee config]:https://bbs.archlinux.org/viewtopic.php?pid=1326090#p1326090
 [Profile-sync-daemon]:https://wiki.archlinux.org/index.php/profile-sync-daemon
 [Infinality fonts]:https://wiki.archlinux.org/index.php/Infinality
 [Archlinux]:https://www.archlinux.org/
 [guake colors elementary-os]:https://github.com/tatetian/guake-colors-elementary-os
+[Bumblebee config]:https://github.com/drog/config/tree/master/etc/bumblebee
+[lightdm config]:https://github.com/drog/config/tree/master/etc/lightdm
+[pulseaudio config]:https://github.com/drog/config/blob/master/etc/pulse/daemon.conf
+[conkyrc config]:https://github.com/drog/config/blob/master/home/diego/.conkyrc
+[guake config]:https://github.com/drog/config/tree/master/home/diego/.config/gconf/apps/guake
+[zsh config]:https://github.com/drog/config/tree/master/home/diego/.zsh

@@ -1,2 +1,2 @@
 #! /bin/bash
-sleep 5 && conky -c /home/drog/.conkyrc
+sleep 5 && conky -c ~/.conkyrc

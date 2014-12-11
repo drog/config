@@ -1,0 +1,17 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# /dev/sda8
+UUID=8f969b5f-1514-415c-be31-28e40eaa9417	/         	ext4      	rw,noatime,data=ordered	0 1
+
+# /dev/sda9
+UUID=5282aa59-d29b-4549-b952-1786eb6898fb	/home     	ext4      	rw,noatime,data=ordered	0 2
+
+# /dev/sda7
+UUID=16E2-7DCC      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro	0 2
+
+tmpfs /tmp tmpfs nodev,nosuid,size=3G          0  0
+
+/dev/sda4 /mnt/windows ntfs-3g rw,noatime 0 0
+/dev/sda6 /mnt/datos ntfs-3g rw,noatime 0 0

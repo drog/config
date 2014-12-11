@@ -1,12 +1,29 @@
 # Config
 All steps i reproduced to set my [Archlinux] config.
-You can find all the config files and system configuration files for my Archlinux fot to set up a development environment.
+You can find all the config files and system configuration files for my Archlinux  to set up a development environment.
 
+#Config files
+* **Bumblebee** config
+* **lightdm** config with integration with xfce4
+* **pulseaudio** config for beteer audio
+* **.conky.rc** config
+* **guake** color shceme from [guake colors elementary-os]
+* **and others** config's files
+
+
+
+##Screenshots
+####Archlinux desktop
+[<img src="screenshots/desktop.png" width="240px" alt="Archlinux with xfce4" />](https://github.com/drog/config/raw/master/screenshots/desktop.png)
+
+####Guake colors
+[<img src="screenshots/guake.png" width="240px" alt="Guake colors" />](https://github.com/drog/config/raw/master/screenshots/guake.png)
 
 ## Zsh
 ```sh
 pacman -S zsh zsh-completions
 wget --no-check-certificate http://install.ohmyz.sh -O - | sh
+sudo wget --no-check-certificate http://install.ohmyz.sh -O - | sh
 chsh -s /bin/zsh
 sudo chsh -s /bin/zsh
 ```
@@ -22,25 +39,28 @@ xdg-user-dirs-gtk-update
 ##xfce4 eyecandy 
 ```sh
 yaourt -S xfce-theme-greybird xcursor-human xfce4-volumed-pulse elementary-xfce-icons-git xfce4-whiskermenu-plugin menulibre
-
-#cursor
-nano /usr/share/icons/default/index.theme
+```
+####Cursor theme
+`nano /usr/share/icons/default/index.theme`
+```sh
 [Icon Theme]
 Inherits=Human
 ```
 ##xfce4 Lightdm integration 
 ```sh
 pacman -S lightdm-gtk2-greeter light-locker 
-# lightdm
-nano /etc/lightdm/lightdm.conf
+```
+`nano /etc/lightdm/lightdm.conf`
+```sh
 [SeatDefaults]
 greeter-session=lightdm-gtk-greeter
+```
+####Wallpaper lightdm
+`cp path/to/wallpaper.png /usr/share/pixmaps/wallpaper.png`
 
-#wallpaper
-cp Imágenes/Deko-1920x1080.png /usr/share/pixmaps/wallpaper.png
-
-#lightdm-gtk-greeter
-nano /etc/lightdm/lightdm-gtk-greeter.conf
+####lightdm-gtk-greeter
+`nano /etc/lightdm/lightdm-gtk-greeter.conf`
+```sh
 [greeter]
 background= /usr/share/pixmaps/wallpaper.png
 theme-name=Greybird
@@ -48,7 +68,7 @@ icon-theme-name=elementary-xfce
 ```
 ##xfce4 Lightdm lightlock 
 ####1.  Create systemd service
-nano /etc/systemd/system/lock.service
+`nano /etc/systemd/system/lock.service`
 
 ```sh
 [Unit]
@@ -63,19 +83,13 @@ ExecStart=/usr/bin/xflock4
 WantedBy=suspend.target
 ```
 ####2.  Enable systemd service
+`systemctl enable lock`
 
-```sh
-systemctl enable lock
-
-```
 ####3. Add light-locker to xflock4 script
-
+`nano /usr/bin/xflock4`
 ```sh
-nano /usr/bin/xflock4
-
 #!/bin/sh
 light-locker-command -l
-
 ```
 [Source Xlock config]
 
@@ -86,7 +100,7 @@ pacman -S gstreamer0.10-{{bad,good,ugly,base}{,-plugins},ffmpeg}
 
 ##Compressed Files
 ```sh
-pacman -R file-roller
+pacman -S file-roller
 pacman -S unrar zip unzip xz tar gzip bzip2 rpmextract
 
 ```
@@ -111,20 +125,19 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ##Packages for programming
 ```sh
 pacman -S mariadb mongodb ruby openssh nodejs apache php php-apache php-mcrypt php-gd php-composer gdb virtualbox
+
 yaourt -S sublime-text-dev virtualbox-ext-oracle
+
 npm install -g bower gulp grunt-cli yo sails generator-gulp-angular  generator-angular
 
-##games
+#games
 pacman -S tiled tinyxml sdl sdl_image sdl_gfx
 
 #Networking
 pacman -S nmap wireshark-cli wireshark-gtk john aircrack-ng
 ```
 ####Mariadb config
-```sh
-#mariadb config
-systemctl start mysqld &&  /usr/bin/mysql_secure_installation
-```
+`systemctl start mysqld &&  /usr/bin/mysql_secure_installation`
 
 ##Power managment
 ```sh
@@ -150,9 +163,7 @@ pacman -S libreoffice-fresh-es hunspell-es hyphen-es libmythes mythes-es
 pacman -S texlive-core texlive-bibtexextra texlive-htmlxml texlive-humanities texlive-latexextra texlive-pictures texlive-publishers  texlive-science
 ```
 ##Better Fonts with [Infinality fonts]
-```sh
-nano /etc/pacman.con
-```
+`nano /etc/pacman.con`
 ```sh
 [infinality-bundle]
 Server = http://bohoomil.com/repo/$arch
@@ -178,4 +189,4 @@ pacman -S adobe-source-han-sans-cn-fonts adobe-source-han-sans-jp-fonts adobe-so
 [Profile-sync-daemon]:https://wiki.archlinux.org/index.php/profile-sync-daemon
 [Infinality fonts]:https://wiki.archlinux.org/index.php/Infinality
 [Archlinux]:https://www.archlinux.org/
-
+[guake colors elementary-os]:https://github.com/tatetian/guake-colors-elementary-os

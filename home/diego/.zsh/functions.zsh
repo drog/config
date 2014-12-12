@@ -18,16 +18,16 @@ function extract {
   else
       echo "'$1' is not a valid file"
   fi
-} 
+}
 
 
 function terminal-colors {
 
-  #   This file echoes a bunch of color codes to the 
-  #   terminal to demonstrate what's available.  Each 
+  #   This file echoes a bunch of color codes to the
+  #   terminal to demonstrate what's available.  Each
   #   line is the color code of one foreground color,
-  #   out of 17 (default + 16 escapes), followed by a 
-  #   test use of that color on all nine background 
+  #   out of 17 (default + 16 escapes), followed by a
+  #   test use of that color on all nine background
   #   colors (default + 8 escapes).
   #
 
@@ -52,7 +52,7 @@ function terminal-colors {
 
 
 # obtain public ip addresses (v4 and v6) if available
-function hostip(){
+function public-ip(){
   IPV6=`curl -s ipv6.icanhazipv6.com |grep my_address |sed -e 's/.*>\(.*\)<\/p>/\1/'`
   IPV4=`curl -s ifconfig.me/ip`
   if [ -z "$IPV6" ]; then
@@ -65,4 +65,17 @@ function hostip(){
   else
     echo "IPv4: ${IPV4}"
   fi
+}
+
+#colorized man
+man() {
+    env \
+        LESS_TERMCAP_mb=$'\e[1;31m' \
+        LESS_TERMCAP_md=$'\e[1;31m' \
+        LESS_TERMCAP_me=$'\e[0m' \
+        LESS_TERMCAP_se=$'\e[0m' \
+        LESS_TERMCAP_so=$'\e[1;44;33m' \
+        LESS_TERMCAP_ue=$'\e[0m' \
+        LESS_TERMCAP_us=$'\e[1;32m' \
+        man "$@"
 }

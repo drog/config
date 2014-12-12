@@ -45,3 +45,9 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 unset GREP_OPTIONS
+
+if [ -f $USER_DIR_CONFIG/zsh_nocorrect ]; then
+    while read -r COMMAND; do
+        alias $COMMAND="nocorrect $COMMAND"
+    done < $USER_DIR_CONFIG/zsh_nocorrect
+fi

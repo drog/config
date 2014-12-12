@@ -108,6 +108,7 @@ MODULES="i915 bbswitch"
 GRUB_CMDLINE_LINUX_DEFAULT="quiet rcutree.rcu_idle_gp_delay=1"
 ```
 `lspci | grep VGA | grep NVIDIA`
+
 `nano /etc/bumblebee/xorg.conf.nvidia`
 ```bash
 BusID "PCI:01:00:0"
@@ -132,7 +133,7 @@ yaourt -S sublime-text-dev virtualbox-ext-oracle
 npm install -g bower gulp grunt-cli yo sails generator-gulp-angular  generator-angular
 
 #games
-pacman -S tiled tinyxml sdl sdl_image sdl_gfx
+pacman -S tiled tinyxml sdl sdl_image sdl_gfx sfml
 
 #Networking
 pacman -S nmap wireshark-cli wireshark-gtk john aircrack-ng
@@ -172,6 +173,27 @@ systemctl enable NetworkManager
 yaourt -S blueman-git
 systemctl enable bluetooth
 ```
+
+##Firewall Configuration
+```bash
+pacman -S iptables
+systemctl enable iptables && systemctl start iptables
+```
+Set rules
+```bash
+#block all conections
+iptables -P INPUT DROP
+#allow all conections for localhost
+iptables -A INPUT -i lo -j ACCEPT
+#allow all conections established by localhost
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+```
+Save rules
+```bash
+iptables-save > /etc/iptables/iptables.rules
+systemctl reload iptables
+```
+
 ##Other stuff
 ```bash
 pacman -S conky clementine gpicview wine winetricks wine_gecko xdelta3 pkgstats firefox-adblock-plus  firefox-i18n-es-cl transmission-gtk filezilla xchat  wget mpv libva libva-intel-driver thunderbird-i18n-es-ar  gtk-recordmydesktop skype galculator bleachbit preload ntfs-3g archey3

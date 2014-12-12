@@ -1,0 +1,5 @@
+[user]
+	email = dreg27@gmail.com
+	name = Diego Canales
+[core]
+	excludesfile = ~/.gitignore

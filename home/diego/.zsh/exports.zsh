@@ -20,3 +20,5 @@ export ARCHFLAGS="-arch x86_64"
 # Setup terminal, and turn on colors
 export TERM=xterm-256color
 export CLICOLOR=1
+
+PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"

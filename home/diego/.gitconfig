@@ -3,3 +3,26 @@
 	name = Diego Canales
 [core]
 	excludesfile = ~/.gitignore
+	editor = nano
+[branch "master"]
+	remote = origin
+[push]
+    default = simple
+
+[color]
+    ui = auto
+  [color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+  [color "diff"]
+    meta = yellow
+    frag = magenta
+    old = red
+    new = green
+    whitespace = red reverse
+  [color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+

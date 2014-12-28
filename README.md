@@ -2,7 +2,7 @@
 All steps i reproduced to set my [Archlinux] config.
 You can find all the config files and system configuration files for my Archlinux  to set up a nice environment for development and daily use.
 
-##Config files
+## Config files
 * [Bumblebee config] to avoid errors
 * [lightdm config] with better integration with xfce4
 * [pulseaudio config] for better audio (?)
@@ -12,11 +12,12 @@ You can find all the config files and system configuration files for my Archlinu
 * [Sublime Text 3 config]
 * **and others** config's files
 
-##Screenshots
-####Archlinux desktop
+## Screenshots
+
+#### Archlinux desktop
 [<img src="screenshots/desktop.png" width="240px" alt="Archlinux with xfce4" />](https://github.com/drog/config/raw/master/screenshots/desktop.png)
 
-####Guake colors
+#### Guake colors
 [<img src="screenshots/guake.png" width="240px" alt="Guake colors" />](https://github.com/drog/config/raw/master/screenshots/guake.png)
 
 ## Zsh
@@ -27,26 +28,35 @@ sudo wget --no-check-certificate http://install.ohmyz.sh -O - | sh
 chsh -s /bin/zsh
 sudo chsh -s /bin/zsh
 ```
-##Xfce4 Config
-###1. xfce4 extras
+## Xfce4 Config
+
+### 1. xfce4 extras
+
 ```bash
-pacman -S lxtask ffmpegthumbnailer poppler-glib gvfs gvfs-smb sshfs xdg-user-dirs xdg-user-dirs-gtk guake pavucontrol
+#xfce4 devel
+yaourt -S libxfce4ui-devel xfwm4-devel xfdesktop-devel xfce4-settings-devel xfce4-session-devel
+
+pacman -S lxtask ffmpegthumbnailer poppler-glib gvfs gvfs-smb sshfs xdg-user-dirs xdg-user-dirs-gtk guake pavucontrol pulseaudio-alsa lib32-alsa-plugins lib32-libpulse
 yaourt -S xfce4-volumed-pulse xfce4-whiskermenu-plugin menulibre
 xdg-user-dirs-update
 xdg-user-dirs-gtk-update
 ```
 
-###2. xfce4 eyecandy
+### 2. xfce4 eyecandy
+
 ```bash
 yaourt -S xfce-theme-greybird xcursor-human elementary-xfce-icons-git
 ```
-####2.1 Cursor theme
+#### 2.1 Cursor theme
+
 `nano /usr/share/icons/default/index.theme`
 ```bash
 [Icon Theme]
 Inherits=Human
 ```
-###3. xfce4 Lightdm integration
+
+### 3. xfce4 Lightdm integration
+
 ```bash
 pacman -S lightdm-gtk2-greeter light-locker
 ```
@@ -55,10 +65,12 @@ pacman -S lightdm-gtk2-greeter light-locker
 [SeatDefaults]
 greeter-session=lightdm-gtk-greeter
 ```
-####3.1 Wallpaper lightdm
+#### 3.1 Wallpaper lightdm
+
 `cp path/to/wallpaper.png /usr/share/pixmaps/wallpaper.png`
 
-####3.2 lightdm-gtk-greeter
+#### 3.2 lightdm-gtk-greeter
+
 `nano /etc/lightdm/lightdm-gtk-greeter.conf`
 ```bash
 [greeter]
@@ -66,8 +78,10 @@ background= /usr/share/pixmaps/wallpaper.png
 theme-name=Greybird
 icon-theme-name=elementary-xfce
 ```
-###4. xfce4 Lightdm lightlock
-####4.1  Create systemd service
+### 4. xfce4 Lightdm lightlock
+
+#### 4.1  Create systemd service
+
 `nano /etc/systemd/system/lock.service`
 
 ```bash
@@ -82,10 +96,12 @@ ExecStart=/usr/bin/xflock4
 [Install]
 WantedBy=suspend.target
 ```
-####4.2  Enable systemd service
+#### 4.2  Enable systemd service
+
 `systemctl enable lock`
 
-####4.3 Add light-locker to xflock4 script
+#### 4.3 Add light-locker to xflock4 script
+
 `nano /usr/bin/xflock4`
 ```bash
 #!/bin/sh
@@ -93,7 +109,8 @@ light-locker-command -l
 ```
 [Source Xlock config]
 
-##nVidia Optimus Bumblebee
+## nVidia Optimus Bumblebee
+
 ```bash
 pacman -S bumblebee bbswitch primus lib32-primus lib32-virtualgl nvidia lib32-nvidia-utils
 gpasswd -a diego bumblebee
@@ -115,7 +132,8 @@ BusID "PCI:01:00:0"
 ```
 [Source Bumblebee config]
 
-##[linux-ck] Brain Fuck Scheduler (BFS)
+## [linux-ck] Brain Fuck Scheduler (BFS)
+
 ```bash
 pacman-key -r 5EE46C4C
 pacman-key --lsign-key 5EE46C4C
@@ -124,9 +142,15 @@ yaourt -S bbswitch-ck acpi_call-ck
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-##Packages for programming
+## Packages for programming
+
 ```bash
-pacman -S mariadb mongodb ruby openssh nodejs apache php php-apache php-mcrypt php-gd php-composer gdb virtualbox jdk7-openjdk jre7-openjdk jre7-openjdk-headless
+pacman -S mariadb mongodb ruby openssh nodejs apache php php-apache php-mcrypt php-gd php-composer gdb virtualbox jdk7-openjdk jre7-openjdk jre7-openjdk-headlessc clang qtcreator
+
+pacman -S postgresql php-pgsql pgadmin3
+
+pacman -S xampp
+sudo ln -s ~/public_html /opt/lampp/htdocs/$USER
 
 yaourt -S sublime-text-dev virtualbox-ext-oracle
 
@@ -139,46 +163,64 @@ pacman -S tiled tinyxml sdl sdl_image sdl_gfx sfml
 pacman -S nmap wireshark-cli wireshark-gtk john aircrack-ng
 ```
 
-###Sublime Text 3 config
-#####1. Install  [Install Package Control](https://sublime.wbond.net/installation)
+### Sublime Text 3 config
+
+##### 1. Install  [Install Package Control](https://sublime.wbond.net/installation)
 
 Open Sublime Text 3 and hit `ctrl+´` shortcut or the `View > Show Console` menu, then enter the following:
+
 ```bash
 import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
 ```
-#####2. Install and load packages (`ctrl-Shift-P`):
+
+##### 2. Install and load packages (`ctrl-Shift-P`):
   * [BracketHighlighter](https://github.com/facelessuser/BracketHighlighter)
   * [ColorPicker](https://github.com/weslly/ColorPicker)
   * [SublimeCodeIntel](https://github.com/SublimeCodeIntel/SublimeCodeIntel)
 
-#####3. Load user settings from [Sublime Text 3 config]
+##### 3. Load user settings from [Sublime Text 3 config]
 
-###Mariadb config
+### PostgreSQL config
+
+```bash
+sed -i '/pgsql.so/s/^;//' /etc/php/php.ini
+su - postgres -c "initdb --locale es_CL.UTF-8 -D '/var/lib/postgres/data'"
+chown -R postgres:postgres /var/lib/postgres
+systemctl start postgresql
+```
+
+### Mariadb config
 `systemctl start mysqld &&  /usr/bin/mysql_secure_installation`
 
-##Power managment
+## Power managment
+
 ```bash
 pacman -S  tlp lm_sensors smartmontools lsb-release ethtool iw
 systemctl enable tlp
 sensors-detect
 ```
-##Network Manager
+
+## Network Manager
+
 ```bash
 pacman -S networkmanager networkmanager-openconnect network-manager-applet dnsmasq
 systemctl enable NetworkManager
 ```
 
-##Bluetooth
+## Bluetooth
+
 ```bash
 yaourt -S blueman-git
 systemctl enable bluetooth
 ```
 
-##Firewall Configuration
+## Firewall Configuration
+
 ```bash
 pacman -S iptables
 systemctl enable iptables && systemctl start iptables
 ```
+
 Set rules
 ```bash
 #block all conections
@@ -188,16 +230,20 @@ iptables -A INPUT -i lo -j ACCEPT
 #allow all conections established by localhost
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 ```
+
 Save rules
 ```bash
 iptables-save > /etc/iptables/iptables.rules
 systemctl reload iptables
 ```
 
-##Other stuff
+## Other stuff
+
 ```bash
-pacman -S conky clementine gpicview wine winetricks wine_gecko xdelta3 pkgstats firefox-adblock-plus  firefox-i18n-es-cl transmission-gtk filezilla xchat  wget mpv libva libva-intel-driver thunderbird-i18n-es-ar  gtk-recordmydesktop skype galculator bleachbit preload ntfs-3g archey3
-yaourt -S google-chrome profile-sync-daemon
+pacman -S conky clementine gpicview wine winetricks wine_gecko xdelta3 pkgstats firefox-adblock-plus  firefox-i18n-es-cl transmission-gtk filezilla xchat  wget mpv libva libva-intel-driver thunderbird-i18n-es-ar  gtk-recordmydesktop skype galculator bleachbit preload ntfs-3g archey3 chromium flashplugin
+#fix errors logs wine
+pacman -S lib32-ncurses lib32-mpg123
+yaourt -S profile-sync-daemon anything-sync-daemon chromium-pepper-flash
 #gaming
 pacman -S steam desmume
 
@@ -216,13 +262,15 @@ pacman -S texlive-core texlive-bibtexextra texlive-htmlxml texlive-humanities te
 pacman -S gstreamer0.10-{{bad,good,ugly,base}{,-plugins},ffmpeg}
 ```
 
-##Compressed Files
+## Compressed Files
+
 ```bash
 pacman -S file-roller
 pacman -S unrar zip unzip xz tar gzip bzip2 rpmextract
 ```
 
-##Better Fonts with [Infinality fonts]
+## Better Fonts with [Infinality fonts]
+
 `nano /etc/pacman.con`
 ```bash
 [infinality-bundle]
@@ -234,6 +282,7 @@ Server = http://bohoomil.com/repo/multilib/$arch
 [infinality-bundle-fonts]
 Server = http://bohoomil.com/repo/fonts
 ```
+
 ```bash
 pacman -S infinality-bundle infinality-bundle-multilib
 

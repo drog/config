@@ -1,3 +1,76 @@
+source /usr/lib/prezto/runcoms/zpreztorc
+
+############################################# modules  #############################################
+# Set the Prezto modules to load (browse modules).
+# The order matters.
+zstyle ':prezto:load' pmodule \
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'git' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'ssh' \
+  'completion' \
+  'syntax-highlighting' \
+  'history-substring-search' \
+  'prompt'
+
+
+############################################# theme #############################################
+zstyle ':prezto:module:prompt' theme 'paradox'
+
+
+############################################# exports #############################################
+
+export EDITOR='subl3 -w'
+export VISUAL='subl3 -w'
+
+export PATH="`ruby -e 'print Gem.user_dir'`/bin:$PATH"
+
+############################################# aliases #############################################
+
+alias mysql='mysql -u root -p'
+
+alias grep='grep --color=auto'
+
+alias pac='yaourt -Syu --aur'
+alias pacs='pacman -Ss'
+alias yaos='yaourt -Ss'
+alias pacin='pacman -S'
+alias yaoin='yaourt -S'
+alias netbeans='~/.netbeans-8.0.2/bin/netbeans'
+alias android-studio='~/.android-studio/bin/studio.sh'
+alias nvidia-settings='optirun -b none nvidia-settings -c :8'
+
+alias subl='subl3'
+alias archey='archey3'
+
+alias mysqlon='systemctl start mysqld'
+alias mysqloff='systemctl stop mysqld'
+
+alias httpddon='systemctl start httpd'
+alias httpdoff='systemctl stop httpd'
+
+
+alias oraclestart='/etc/rc.d/oracle-xe start'
+alias oraclestop='/etc/rc.d/oracle-xe stop'
+
+alias lazaro='ssh dacanalesc@lazaro.inf.uct.cl '
+
+alias post='~/.scripts/post.sh'
+
+#git
+alias st='git status'
+
+
+alias js='jekyll serve --watch & xdg-open "http://localhost:4000"'
+
+
+############################################# functions #############################################
+
 function extract {
   echo Extracting $1 ...
   if [ -f $1 ] ; then
@@ -53,13 +126,7 @@ function terminal-colors {
 
 # obtain public ip addresses (v4 and v6) if available
 function public-ip(){
-  IPV6=`curl -s ipv6.icanhazipv6.com |grep my_address |sed -e 's/.*>\(.*\)<\/p>/\1/'`
   IPV4=`curl -s ifconfig.me/ip`
-  if [ -z "$IPV6" ]; then
-    echo "IPv6: -"
-  else
-    echo "IPv6: ${IPV6}"
-  fi
   if [ -z "$IPV4" ]; then
   echo "IPv4: -"
   else
